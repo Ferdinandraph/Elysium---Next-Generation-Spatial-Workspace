@@ -1,29 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Toaster } from "sonner";
+import { AmbientBackground } from "@/components/canvas/AmbientBackground";
+import { CursorGlow } from "@/components/canvas/CursorGlow";
+import { Canvas } from "@/components/canvas/Canvas";
+import { Toolbar } from "@/components/canvas/Toolbar";
+import { TopBar } from "@/components/canvas/TopBar";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Elysium — Spatial Workspace" },
+      {
+        name: "description",
+        content:
+          "An infinite 2.5D AI-powered canvas to organize thoughts, notes, tasks, and ideas with premium animations and depth.",
+      },
+      { property: "og:title", content: "Elysium — Spatial Workspace" },
+      {
+        property: "og:description",
+        content:
+          "An infinite 2.5D AI-powered canvas to organize thoughts, notes, tasks, and ideas with premium animations and depth.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="relative h-screen w-screen overflow-hidden bg-background">
+      <AmbientBackground />
+      <Canvas />
+      <CursorGlow />
+      <TopBar />
+      <Toolbar />
+      <Toaster theme="dark" position="top-center" />
+    </main>
   );
 }
