@@ -84,6 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "An infinite 2.5D AI-powered canvas to organize thoughts, notes, and ideas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Elysium — Spatial Workspace" },
+      { name: "twitter:description", content: "An infinite 2.5D AI-powered canvas to organize thoughts, notes, and ideas." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/37c5a99f-7730-4619-9294-7565a66816dd/id-preview-3bfb40ac--ea350c86-33ff-46d2-846f-682350aa5ecd.lovable.app-1780503832028.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/37c5a99f-7730-4619-9294-7565a66816dd/id-preview-3bfb40ac--ea350c86-33ff-46d2-846f-682350aa5ecd.lovable.app-1780503832028.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
