@@ -1,4 +1,9 @@
+[build]
+  base = "client"
+  publish = ".output/public"
+  command = "npm run build"
+
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/server"
   status = 200
