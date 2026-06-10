@@ -23,26 +23,55 @@ export function Toolbar() {
 
   const hasSelection = selectedIds.length > 0;
 
-  const runAI = (action: "enhance" | "summarize" | "connect" | "expand") => {
-    if (!hasSelection) {
-      toast.info("Select a card first");
-      return;
+  const runAI = async (action: "enhance" | "summarize" | "connect" | "expand") => {
+  if (!hasSelection) {
+    toast.info("Select a card first");
+    return;
+  }
+  
+  const id = selectedIds[0];
+  const c = cards[id];
+  if (!c) return;
+
+  // 1. Show the loading toast
+  toast.loading("Elysium AI thinking...", { id: "ai" });
+
+  try {
+    // 2. Replace this URL with your production or test Webhook URL from n8n
+    const N8N_WEBHOOK_URL = "https://musical-whippet.pikapod.net/webhook-test/5a83bad6-3446-4466-a6b5-4fa21f1ad357";
+
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action: action,
+        title: c.title,
+        content: c.content,
+        cardId: c.id,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
     }
-    const id = selectedIds[0];
-    const c = cards[id];
-    if (!c) return;
-    toast.loading("Elysium AI thinking...", { id: "ai" });
-    setTimeout(() => {
-      const transforms: Record<string, string> = {
-        enhance: `${c.content}\n\n✨ _Refined:_ ${c.content || c.title} — polished with greater clarity, vivid language, and tighter structure.`,
-        summarize: `📝 **Summary:** ${(c.content || c.title).slice(0, 120)}${(c.content || c.title).length > 120 ? "..." : ""}`,
-        connect: `${c.content}\n\n🔗 **Related ideas:**\n- A parallel concept worth exploring\n- A contrasting perspective\n- A possible next step`,
-        expand: `${c.content}\n\n🌱 **Expanded:**\nDiving deeper, consider the broader context, the underlying assumptions, and the implications of this idea across multiple domains.`,
-      };
-      updateCard(id, { content: transforms[action] });
+
+    const data = await response.json();
+
+    // 3. Extract the new text returned from n8n and update the store
+    if (data && data.transformedContent) {
+      updateCard(id, { content: data.transformedContent });
       toast.success(`${action} complete`, { id: "ai" });
-    }, 800);
-  };
+    } else {
+      throw new Error("Invalid response structure from AI pipeline");
+    }
+
+  } catch (error) {
+    console.error("n8n AI Request Failed:", error);
+    toast.error("Failed to run AI action. Check your connection.", { id: "ai" });
+  }
+};
 
   const handleExport = () => {
     const json = exportJSON();
