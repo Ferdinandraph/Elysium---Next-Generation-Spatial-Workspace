@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Add this section to override the default Cloudflare target
+  nitro: {
+    preset: "node-server",
+  },
 });
