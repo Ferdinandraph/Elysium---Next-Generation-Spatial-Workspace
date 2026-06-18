@@ -116,6 +116,8 @@ function CardInner({ card, selected, dimmed, scale }: CardProps) {
             value={card.title}
             onChange={(e) => updateCard(card.id, { title: e.target.value })}
             onBlur={() => setEditing(false)}
+            // ADD THIS line:
+            onPointerDown={(e) => e.stopPropagation()} 
             className="bg-transparent text-base font-semibold text-foreground outline-none"
           />
         ) : (
@@ -128,6 +130,9 @@ function CardInner({ card, selected, dimmed, scale }: CardProps) {
             value={card.content}
             onChange={(e) => updateCard(card.id, { content: e.target.value })}
             placeholder="Write something... use /ai <prompt> for AI"
+            // ADD THESE lines:
+            onPointerDown={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()} 
             className="flex-1 resize-none bg-transparent text-sm text-foreground/90 outline-none placeholder:text-muted-foreground"
           />
         ) : (
