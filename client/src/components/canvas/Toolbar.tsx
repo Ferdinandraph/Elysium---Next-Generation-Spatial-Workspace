@@ -38,7 +38,7 @@ export function Toolbar() {
 
   try {
     // 2. Replace this URL with your production or test Webhook URL from n8n
-    const N8N_WEBHOOK_URL = "https://musical-whippet.pikapod.net/webhook-test/5a83bad6-3446-4466-a6b5-4fa21f1ad357";
+    const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
     const response = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
